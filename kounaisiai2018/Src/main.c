@@ -126,6 +126,17 @@ void motor1(int dire,int duty)//右モーター
 			   		  	 Error_Handler();
 			   		  	 }
 
+			   sConfigOC.Pulse=10;
+			   	 if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
+			   			   			   		  	 {
+			   			   			   		  	 Error_Handler();
+			   			   			   		  	 }
+			   if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2) != HAL_OK)
+			   				   					{
+			   				   						Error_Handler();
+			   				   					 }
+
+
 
 			}
 
@@ -140,6 +151,17 @@ void motor1(int dire,int duty)//右モーター
 			   			   			{
 			   							Error_Handler();
 			   			   			 }
+
+			   		sConfigOC.Pulse=0;
+			   					   		if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+			   					   			   		  	 {
+			   					   			   		  	 Error_Handler();
+			   					   			   		  	 }
+
+			   					   		if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1) != HAL_OK)
+			   					   			   			{
+			   					   							Error_Handler();
+			   					   			   			 }
 					}
 
 }
@@ -147,7 +169,7 @@ void motor1(int dire,int duty)//右モーター
 void motor2(int dire,int duty)//左モーター
 {
 	if(dire==0){
-			sConfigOC.Pulse=map(duty,0,100,0,9999);
+			sConfigOC.Pulse=5000;
 				   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
 				   		  	 {
 				   		  	 Error_Handler();
@@ -157,6 +179,17 @@ void motor2(int dire,int duty)//左モーター
 				   					{
 				   						Error_Handler();
 				   					 }
+
+				    sConfigOC.Pulse=10;
+				   				   		if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
+				   				   			   		  	 {
+				   				   			   		  	 Error_Handler();
+				   				   			   		  	 }
+
+				   				   		if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4) != HAL_OK)
+				   				   			   			{
+				   				   							Error_Handler();
+				   				   			   			 }
 				}
 
 	else if(dire==1){
@@ -170,6 +203,17 @@ void motor2(int dire,int duty)//左モーター
 				   			   			{
 				   							Error_Handler();
 				   			   			 }
+
+				   		sConfigOC.Pulse=9999;
+				   		if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
+				   						   		  	 {
+				   						   		  	 Error_Handler();
+				   						   		  	 }
+
+				   		if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3) != HAL_OK)
+				   						   			{
+				   						   				Error_Handler();
+				   						   			}
 					}
 
 
@@ -178,9 +222,7 @@ void motor2(int dire,int duty)//左モーター
 
 void motor3(int dire,int duty)//第三モーター
 {
-	switch(dire)
-	{
-	case 0:
+	if(dire==0){
 		sConfigOC.Pulse = duty;
 
 			   			   	if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
@@ -191,8 +233,20 @@ void motor3(int dire,int duty)//第三モーター
 			   			   			{
 			   			   			 Error_Handler();
 			   			   		    }
-break;
-	case 1:
+
+			   			 sConfigOC.Pulse = 9999;
+
+			   				if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
+			   			 					   			   			{
+			   			 					   			   			 Error_Handler();
+			   			 					   			   			}
+			   			 	if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2) != HAL_OK)
+			   			 					   			   			{
+			   			 					   			   			 Error_Handler();
+			   			 					   			   		    }
+
+					}
+	else if(dire==1){
 		sConfigOC.Pulse = duty;
 
 					   			   	if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
@@ -203,8 +257,18 @@ break;
 					   			   			{
 					   			   			 Error_Handler();
 					   			   		    }
-		break;
-	}
+					   			 sConfigOC.Pulse = 9999;
+
+					   			 			   			   	if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+					   			 			   			   			{
+					   			 			   			   			 Error_Handler();
+					   			 			   			   			}
+					   			 			   			    if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1) != HAL_OK)
+					   			 			   			   			{
+					   			 			   			   			 Error_Handler();
+					   			 			   			   		    }
+	               }
+
 
 }
 
@@ -264,7 +328,7 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
+/*
 	  if(SW4()==0)
 	  {
 		 motor1(0,20);
@@ -290,11 +354,13 @@ int main(void)
 		  motor2(0,20);
 	  }
 
-
+*/
 	  //HAL_GPIO_WritePin(GPIOA,GPIO_PIN_0,1);
-
-/*//
-	  sConfigOC.Pulse=map(30,0,100,0,9999);
+//motor1(0,70);
+motor2(1,30);
+motor3(0,7000);
+//*//
+	  sConfigOC.Pulse=map(70,0,100,0,9999);
 	  			   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
 	  			   		  	 {
 	  			   		  	 Error_Handler();
@@ -409,7 +475,7 @@ static void MX_TIM1_Init(void)
   }
 
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
+  sConfigOC.Pulse = 7000;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
@@ -432,7 +498,7 @@ static void MX_TIM1_Init(void)
 
   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    _Error_Handler(__FILE__, __LINE__);s
   }
 
   sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
