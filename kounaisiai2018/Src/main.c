@@ -70,42 +70,42 @@ extern void initialise_monitor_handles(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-inline int SW1()
+inline int sensor1()
 {
-return 	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_6);
+return 	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_12);
 }
 
-inline int SW2()
+inline int sensor2()
 {
-return 	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_5);
+return 	HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_1);
 }
 
-inline int SW3()
+inline int sensor3()
 {
-return 	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);
+return 	HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_0);
 }
 
-inline int SW4()
-{
-return 	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4);
-}
-
-inline int SW5()
+inline int sensor4()
 {
 return 	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_7);
 }
 
-inline int SW6()
+inline int sensor5()
 {
-return 	HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_0);
+return 	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_6);
 }
-inline int SW7()
+
+inline int sensor6()
 {
-return 	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_12);
+return 	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_5);
 }
-inline int SW8()
+inline int sensor7()
 {
-return 	HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_1);
+return 	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4);
+}
+inline int sensor8()
+{
+return 	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);
 }
 
 long map(long x, long in_min, long in_max, long out_min, long out_max)//ílÇÃîÕàÕÇÃïœä∑ä÷êî
@@ -225,16 +225,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   //HAL_TIM_Base_Start_IT(&htim1);
-/*//
-  if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2) != HAL_OK)
-					   			   			{
-					   			   			 Error_Handler();
-					   			   		    }
-  if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4) != HAL_OK)
-  			   					{
-  			   						Error_Handler();
-  			   					 }
-//*/
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -246,48 +237,7 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
-	  if(SW4()==0)
-	  {
-		  //printf("sw4\n");
-		 motor1(0,20);
-	  }
 
-  else if(SW2()==0)
-	 	  {
-	 		//  printf("sw2\n");
-	 		  motor1(1,20);
-	 	  }
-	  if(SW8()==0)
-	  {
-		  printf("sw8\n");
-		  motor2(1,20);
-	  }
-	  else if(SW6()==0)
-	 	  {
-		  	  printf("sw6\n");
-	 		  motor2(0,20);
-	 	  }
-	  if(SW3()==0)
-	  {
-		motor3(1,10);
-	  }
-	  if(SW7()==0)
-	 	  {
-	 		motor3(0,10);
-	 	  }
-	  else
-	  {
-		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_2);
-		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_1);
-		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_3);
-		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_4);
-		  HAL_TIM_PWM_Stop(&htim2,TIM_CHANNEL_1);
-		  HAL_TIM_PWM_Stop(&htim2,TIM_CHANNEL_2);
-	  }
-
-
-
-	  //HAL_GPIO_WritePin(GPIOA,GPIO_PIN_0,1);
 //motor1(1,70);
 //motor2(1,30);
 //motor3(0,70);
