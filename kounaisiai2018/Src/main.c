@@ -120,48 +120,18 @@ void motor1(int dire,int duty)//右モーター
 				   					{
 				   						Error_Handler();
 				   					 }
-		sConfigOC.Pulse=map(duty,0,100,0,9999);
-			   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-			   		  	 {
-			   		  	 Error_Handler();
-			   		  	 }
-
-			   sConfigOC.Pulse=10;
-			   	 if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-			   			   			   		  	 {
-			   			   			   		  	 Error_Handler();
-			   			   			   		  	 }
-			   if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2) != HAL_OK)
-			   				   					{
-			   				   						Error_Handler();
-			   				   					 }
-
+		__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_1,9999-map(duty,0,100,0,9999));
 
 
 			}
 
 	else if (dire==1){
-			 sConfigOC.Pulse=map(duty,0,100,0,9999);
-			   		if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-			   			   		  	 {
-			   			   		  	 Error_Handler();
-			   			   		  	 }
+		__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,9999-map(duty,0,100,0,9999));
 
 			   		if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2) != HAL_OK)
 			   			   			{
 			   							Error_Handler();
 			   			   			 }
-
-			   		sConfigOC.Pulse=0;
-			   					   		if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-			   					   			   		  	 {
-			   					   			   		  	 Error_Handler();
-			   					   			   		  	 }
-
-			   					   		if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1) != HAL_OK)
-			   					   			   			{
-			   					   							Error_Handler();
-			   					   			   			 }
 					}
 
 }
@@ -169,51 +139,25 @@ void motor1(int dire,int duty)//右モーター
 void motor2(int dire,int duty)//左モーター
 {
 	if(dire==0){
-			sConfigOC.Pulse=5000;
-				   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
-				   		  	 {
-				   		  	 Error_Handler();
-				   		  	 }
 
+		__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_3,9999-map(duty,0,100,0,9999));
 				   	if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3) != HAL_OK)
 				   					{
 				   						Error_Handler();
 				   					 }
 
-				    sConfigOC.Pulse=10;
-				   				   		if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
-				   				   			   		  	 {
-				   				   			   		  	 Error_Handler();
-				   				   			   		  	 }
 
-				   				   		if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4) != HAL_OK)
-				   				   			   			{
-				   				   							Error_Handler();
-				   				   			   			 }
 				}
 
 	else if(dire==1){
-				 sConfigOC.Pulse=map(duty,0,100,0,9999);
-				   		if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
-				   			   		  	 {
-				   			   		  	 Error_Handler();
-				   			   		  	 }
 
+				   		__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,9999-map(duty,0,100,0,9999));
 				   		if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4) != HAL_OK)
 				   			   			{
 				   							Error_Handler();
 				   			   			 }
 
-				   		sConfigOC.Pulse=9999;
-				   		if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
-				   						   		  	 {
-				   						   		  	 Error_Handler();
-				   						   		  	 }
 
-				   		if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3) != HAL_OK)
-				   						   			{
-				   						   				Error_Handler();
-				   						   			}
 					}
 
 
@@ -223,50 +167,22 @@ void motor2(int dire,int duty)//左モーター
 void motor3(int dire,int duty)//第三モーター
 {
 	if(dire==0){
-		sConfigOC.Pulse = duty;
-
-			   			   	if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-			   			   			{
-			   			   			 Error_Handler();
-			   			   			}
+		__HAL_TIM_SetCompare(&htim2,TIM_CHANNEL_1,9999-map(duty,0,100,0,9999));
 			   			    if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1) != HAL_OK)
 			   			   			{
 			   			   			 Error_Handler();
 			   			   		    }
 
-			   			 sConfigOC.Pulse = 9999;
 
-			   				if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-			   			 					   			   			{
-			   			 					   			   			 Error_Handler();
-			   			 					   			   			}
-			   			 	if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2) != HAL_OK)
-			   			 					   			   			{
-			   			 					   			   			 Error_Handler();
-			   			 					   			   		    }
 
 					}
 	else if(dire==1){
-		sConfigOC.Pulse = duty;
-
-					   			   	if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-					   			   			{
-					   			   			 Error_Handler();
-					   			   			}
+		__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,9999-map(duty,0,100,0,9999));
 					   			    if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2) != HAL_OK)
 					   			   			{
 					   			   			 Error_Handler();
 					   			   		    }
-					   			 sConfigOC.Pulse = 9999;
 
-					   			 			   			   	if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-					   			 			   			   			{
-					   			 			   			   			 Error_Handler();
-					   			 			   			   			}
-					   			 			   			    if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1) != HAL_OK)
-					   			 			   			   			{
-					   			 			   			   			 Error_Handler();
-					   			 			   			   		    }
 	               }
 
 
@@ -307,17 +223,18 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
+
   //HAL_TIM_Base_Start_IT(&htim1);
-  /*
+/*//
   if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2) != HAL_OK)
 					   			   			{
 					   			   			 Error_Handler();
 					   			   		    }
-  if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1) != HAL_OK)
+  if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4) != HAL_OK)
   			   					{
   			   						Error_Handler();
   			   					 }
-  			   					 */
+//*/
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -328,15 +245,28 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-/*
+
 	  if(SW4()==0)
 	  {
+		  //printf("sw4\n");
 		 motor1(0,20);
 	  }
+
+  else if(SW2()==0)
+	 	  {
+	 		//  printf("sw2\n");
+	 		  motor1(1,20);
+	 	  }
 	  if(SW8()==0)
 	  {
+		  printf("sw8\n");
 		  motor2(1,20);
 	  }
+	  else if(SW6()==0)
+	 	  {
+		  	  printf("sw6\n");
+	 		  motor2(0,20);
+	 	  }
 	  if(SW3()==0)
 	  {
 		motor3(1,10);
@@ -345,32 +275,23 @@ int main(void)
 	 	  {
 	 		motor3(0,10);
 	 	  }
-	  else if(SW2()==0)
+	  else
 	  {
-		  motor1(1,20);
-	  }
-	  else if(SW6()==0)
-	  {
-		  motor2(0,20);
+		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_2);
+		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_1);
+		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_3);
+		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_4);
+		  HAL_TIM_PWM_Stop(&htim2,TIM_CHANNEL_1);
+		  HAL_TIM_PWM_Stop(&htim2,TIM_CHANNEL_2);
 	  }
 
-*/
+
+
 	  //HAL_GPIO_WritePin(GPIOA,GPIO_PIN_0,1);
-//motor1(0,70);
-motor2(1,30);
-motor3(0,7000);
-//*//
-	  sConfigOC.Pulse=map(70,0,100,0,9999);
-	  			   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-	  			   		  	 {
-	  			   		  	 Error_Handler();
-	  			   		  	 }
-	  			   if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1) != HAL_OK)
-	  						   					{
-	  						   						Error_Handler();
-	  						   					 }
-	  						   					 //*/
-	  //printf("ok\n");
+//motor1(1,70);
+//motor2(1,30);
+//motor3(0,70);
+
 
   }
   /* USER CODE END 3 */
@@ -498,7 +419,7 @@ static void MX_TIM1_Init(void)
 
   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);s
+    _Error_Handler(__FILE__, __LINE__);
   }
 
   sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
