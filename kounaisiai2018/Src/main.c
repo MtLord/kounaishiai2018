@@ -277,12 +277,21 @@ int main(void)
 	 	  }
 	  else
 	  {
+		  /*//
 		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_2);
 		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_1);
 		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_3);
 		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_4);
 		  HAL_TIM_PWM_Stop(&htim2,TIM_CHANNEL_1);
 		  HAL_TIM_PWM_Stop(&htim2,TIM_CHANNEL_2);
+		  //*/
+		  motor1(0,100);
+		  motor1(1,100);
+		  motor2(0,100);
+		  motor2(1,100);
+		  motor3(0,100);
+		  motor3(1,100);
+
 	  }
 
 
@@ -396,7 +405,7 @@ static void MX_TIM1_Init(void)
   }
 
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 7000;
+  sConfigOC.Pulse = 0;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
@@ -534,22 +543,12 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-
-  /*Configure GPIO pins : PA3 PA5 PA6 PA7 
-                           PA12 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7 
-                          |GPIO_PIN_12;
+  /*Configure GPIO pins : PA3 PA4 PA5 PA6 
+                           PA7 PA12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6 
+                          |GPIO_PIN_7|GPIO_PIN_12;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA4 */
-  GPIO_InitStruct.Pin = GPIO_PIN_4;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PB0 PB1 */
