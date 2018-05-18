@@ -99,10 +99,12 @@ inline int SW6()
 {
 return 	HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_0);
 }
+
 inline int SW7()
 {
 return 	HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_12);
 }
+
 inline int SW8()
 {
 return 	HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_1);
@@ -116,12 +118,11 @@ long map(long x, long in_min, long in_max, long out_min, long out_max)//値の範囲
 void motor1(int dire,int duty)//右モーター
 {
 	if(dire==0){
+		__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_1,9999-map(duty,0,100,0,9999));
 		if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1) != HAL_OK)
 				   					{
 				   						Error_Handler();
 				   					 }
-		__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_1,9999-map(duty,0,100,0,9999));
-
 
 			}
 
@@ -225,16 +226,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   //HAL_TIM_Base_Start_IT(&htim1);
-/*//
-  if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2) != HAL_OK)
-					   			   			{
-					   			   			 Error_Handler();
-					   			   		    }
-  if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4) != HAL_OK)
-  			   					{
-  			   						Error_Handler();
-  			   					 }
-//*/
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -252,12 +244,12 @@ int main(void)
 		 motor1(0,20);
 	  }
 
-  else if(SW2()==0)
+	  else if(SW2()==0)
 	 	  {
 	 		//  printf("sw2\n");
 	 		  motor1(1,20);
 	 	  }
-	  if(SW8()==0)
+	  else if(SW8()==0)
 	  {
 		  printf("sw8\n");
 		  motor2(1,20);
@@ -267,39 +259,23 @@ int main(void)
 		  	  printf("sw6\n");
 	 		  motor2(0,20);
 	 	  }
-	  if(SW3()==0)
+	  else if(SW3()==0)
 	  {
 		motor3(1,10);
 	  }
-	  if(SW7()==0)
+	  else if(SW7()==0)
 	 	  {
 	 		motor3(0,10);
-	 	  }
+	 	}
+//*//
 	  else
-	  {
-		  /*//
-		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_2);
-		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_1);
-		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_3);
-		  HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_4);
-		  HAL_TIM_PWM_Stop(&htim2,TIM_CHANNEL_1);
-		  HAL_TIM_PWM_Stop(&htim2,TIM_CHANNEL_2);
-		  //*/
+	 {
 		  motor1(0,100);
-		  motor1(1,100);
 		  motor2(0,100);
-		  motor2(1,100);
 		  motor3(0,100);
-		  motor3(1,100);
-
 	  }
+//*/
 
-
-
-	  //HAL_GPIO_WritePin(GPIOA,GPIO_PIN_0,1);
-//motor1(1,70);
-//motor2(1,30);
-//motor3(0,70);
 
 
   }
