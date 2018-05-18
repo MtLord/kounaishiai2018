@@ -66,7 +66,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-extern void initialise_monitor_handles(void);
+//extern void initialise_monitor_handles(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -134,10 +134,15 @@ void motor1(int dire,int duty)//右モーター
 			   							Error_Handler();
 			   			   			 }
 					}
+	else if(dire==2)
+			{
+				__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_1,9999-map(0,0,100,0,9999));
+				__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,9999-map(0,0,100,0,9999));
+			}
 
 }
 
-void motor2(int dire,int duty)//左モーター
+void motor3(int dire,int duty)//左モーター
 {
 	if(dire==0){
 
@@ -160,12 +165,16 @@ void motor2(int dire,int duty)//左モーター
 
 
 					}
-
+	else if(dire==2)
+		{
+			__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_3,9999-map(0,0,100,0,9999));
+			__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,9999-map(0,0,100,0,9999));
+		}
 
 
 }
 
-void motor3(int dire,int duty)//第三モーター
+void motor2(int dire,int duty)//第三モーター
 {
 	if(dire==0){
 		__HAL_TIM_SetCompare(&htim2,TIM_CHANNEL_1,9999-map(duty,0,100,0,9999));
@@ -178,13 +187,18 @@ void motor3(int dire,int duty)//第三モーター
 
 					}
 	else if(dire==1){
-		__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,9999-map(duty,0,100,0,9999));
+		__HAL_TIM_SetCompare(&htim2,TIM_CHANNEL_2,9999-map(duty,0,100,0,9999));
 					   			    if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2) != HAL_OK)
 					   			   			{
 					   			   			 Error_Handler();
 					   			   		    }
 
 	               }
+	else if(dire==2)
+	{
+		__HAL_TIM_SetCompare(&htim2,TIM_CHANNEL_2,9999-map(0,0,100,0,9999));
+		__HAL_TIM_SetCompare(&htim2,TIM_CHANNEL_1,9999-map(0,0,100,0,9999));
+	}
 
 
 }
@@ -199,7 +213,7 @@ void motor3(int dire,int duty)//第三モーター
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	initialise_monitor_handles();
+	//initialise_monitor_handles();
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -237,45 +251,55 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
+//motor1の挙動
 	  if(SW4()==0)
 	  {
 		  //printf("sw4\n");
-		 motor1(0,20);
+		 motor1(0,30);
 	  }
-
 	  else if(SW2()==0)
 	 	  {
 	 		//  printf("sw2\n");
-	 		  motor1(1,20);
+	 		  motor1(1,30);
 	 	  }
-	  else if(SW8()==0)
-	  {
-		  printf("sw8\n");
-		  motor2(1,20);
-	  }
-	  else if(SW6()==0)
-	 	  {
-		  	  printf("sw6\n");
-	 		  motor2(0,20);
-	 	  }
-	  else if(SW3()==0)
-	  {
-		motor3(1,10);
-	  }
-	  else if(SW7()==0)
-	 	  {
-	 		motor3(0,10);
-	 	}
-//*//
 	  else
-	 {
-		  motor1(0,100);
-		  motor2(0,100);
-		  motor3(0,100);
+	  {
+		  motor1(2,0);
 	  }
-//*/
 
+
+	//motor3挙動
+	   if(SW8()==0)
+	  {
+
+		  motor3(0,30);
+	  }
+
+	   else if(SW6()==0)
+	 	  {
+	 		  motor3(1,30);
+	 	  }
+	   else{
+		   motor3(2,0);
+	   }
+
+
+
+	//motor2挙動
+	   if(SW3()==0)
+	  {
+		motor2(1,30);
+	  }
+
+	   else if(SW5()==0)
+	  {
+		  motor2(0,30);
+	  }
+	   else{
+		   motor2(2,0);
+	   }
+
+HAL_Delay(10);
 
 
   }
